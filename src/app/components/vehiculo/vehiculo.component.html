@@ -2,7 +2,12 @@
 
 <br>
 
-<p-table [value]="vehiculos" [tableStyle]="{ 'max-width': '70rem' }">
+<p-table [value]="vehiculos" 
+         [tableStyle]="{ 'width': '70rem','text-align': 'center' }"
+         [paginator]="true"
+         [rows]="5"
+         selectionMode="single"
+>
     <ng-template pTemplate="header">
         <tr>
             <th>Id</th>
