@@ -1,0 +1,32 @@
+<app-add-vehiculo></app-add-vehiculo>
+
+<br>
+
+<p-table [value]="vehiculos" [tableStyle]="{ 'max-width': '70rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Id</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Año</th>
+            <th>Motor</th>
+            <th style="width: 5rem"></th>
+            <th style="width: 5rem"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-vehiculo>
+        <tr>
+            <td>{{ vehiculo.id }}</td>
+            <td>{{ vehiculo.marca }}</td>
+            <td>{{ vehiculo.modelo }}</td>
+            <td>{{ vehiculo.anio }}</td>
+            <td>{{ vehiculo.motor }}</td>
+            <td>
+                <p-button label="Eliminar" styleClass="p-button-danger p-button-text p-button-sm" (click)="deleteVehiculo(vehiculo)"></p-button>
+            </td>
+            <td>
+                <p-button label="Editar" styleClass="p-button-warning p-button-text p-button-sm" (click)="getVehiculo(vehiculo)"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

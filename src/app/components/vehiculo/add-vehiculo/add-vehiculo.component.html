@@ -1,0 +1,13 @@
+<h1>agregar vehiculo</h1>
+
+<form [formGroup]="vehicleForm">
+    <input pInputText type="text" class="p-inputtext-sm" placeholder="Marca" formControlName="marca" />
+    <input pInputText type="text" class="p-inputtext-sm" placeholder="Modelo" formControlName="modelo" />
+    <input pInputText type="text" class="p-inputtext-sm" placeholder="Año" formControlName="anio" />
+    <input pInputText type="text" class="p-inputtext-sm" placeholder="Motor" formControlName="motor" />
+    
+    <p-button label="{{labelName}}" styleClass="p-button-sm {{buttonColor}}" (click)="submitAction()"></p-button>
+    <p-button label="Limpiar" styleClass="p-button-sm p-button-secondary p-button-text" (click)="clearAction()"></p-button>
+
+</form>
+
