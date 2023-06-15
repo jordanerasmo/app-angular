@@ -1,0 +1,26 @@
+.content {
+    width: 78%;
+    margin: auto;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid #dee2e6;
+    padding: 3rem;
+    height: 860px;
+}
+.content-table {
+    border: 1px solid #cc8925;
+    border-radius: 1px;
+    padding: 20px;
+    background: #dee2e6;
+}
+.content-preload{
+    background: transparent;
+    width: 90%;
+    margin: auto;
+    text-align: center;
+}
+.content-preload p{
+    color: #cc8925;
+    font-size: 25px;
+    font-family: sans-serif;
+}

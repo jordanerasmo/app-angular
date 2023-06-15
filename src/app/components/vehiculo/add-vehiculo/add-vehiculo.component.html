@@ -1,13 +1,27 @@
-<h1>agregar vehiculo</h1>
+<div class="content-add">
 
-<form [formGroup]="vehicleForm">
-    <input pInputText type="text" class="p-inputtext-sm" placeholder="Marca" formControlName="marca" />
-    <input pInputText type="text" class="p-inputtext-sm" placeholder="Modelo" formControlName="modelo" />
-    <input pInputText type="text" class="p-inputtext-sm" placeholder="Año" formControlName="anio" />
-    <input pInputText type="text" class="p-inputtext-sm" placeholder="Motor" formControlName="motor" />
+    <div *ngIf="isEdit; else create">
+        <p class="title">Editar Vehículo</p>
+    </div>
+      
+    <ng-template #create>
+        <p class="title">Nuevo Vehículo</p>
+    </ng-template>
     
-    <p-button label="{{labelName}}" styleClass="p-button-sm {{buttonColor}}" (click)="submitAction()"></p-button>
-    <p-button label="Limpiar" styleClass="p-button-sm p-button-secondary p-button-text" (click)="clearAction()"></p-button>
+    <div class="content-form">
+        <form [formGroup]="vehicleForm">
+            <input pInputText type="text" class="p-inputtext-sm" placeholder="Marca" formControlName="marca" />
+            <input pInputText type="text" class="p-inputtext-sm" placeholder="Modelo" formControlName="modelo" />
+            <input pInputText type="text" class="p-inputtext-sm" placeholder="Año" formControlName="anio" />
+            <input pInputText type="text" class="p-inputtext-sm" placeholder="Motor" formControlName="motor" />
+            
+            <div class="content-buttons">
+                <p-button label="{{labelName}}" styleClass="p-button-sm {{buttonColor}}" (click)="submitAction()"></p-button>
+                <p-button label="Limpiar" styleClass="p-button-sm p-button-secondary p-button-text" (click)="clearAction()"></p-button>
+            </div>
+        </form>
 
-</form>
+    </div>
+</div>
+
 

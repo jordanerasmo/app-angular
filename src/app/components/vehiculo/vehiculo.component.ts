@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-vehiculo',
-    templateUrl: 'vehiculo.component.html'
+    templateUrl: 'vehiculo.component.html',
+    styleUrls: ['./vehicle.component.css']
 })
 
 export class VehiculoComponent implements OnInit {

@@ -9,6 +9,7 @@ import { Vehicle } from 'src/app/Interfaces/Vehicle';
 @Component({
   selector: 'app-add-vehiculo',
   templateUrl: './add-vehiculo.component.html',
+  styleUrls: ['./add-vehicle.component.css']
 })
 
 export class AddVehiculoComponent implements OnInit {

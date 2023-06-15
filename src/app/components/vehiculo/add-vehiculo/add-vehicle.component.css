@@ -1,0 +1,21 @@
+.content-add {
+    background-color: #dee2e6;
+    margin: auto;
+    width: 83%;
+    border-radius: 5px;
+    border: 1px solid #cc8925;
+    padding: 1rem;
+    margin-bottom: 3rem;
+}
+.content-form {
+    text-align: center;
+}
+.content-buttons {
+    padding: 1rem;
+}
+.title{
+    font-size: 22px;
+    color: #f59e0b;
+    font-family: sans-serif;
+    text-align: center;
+}
