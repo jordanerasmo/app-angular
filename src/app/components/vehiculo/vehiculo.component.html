@@ -1,8 +1,10 @@
 <app-add-vehiculo></app-add-vehiculo>
 
+<b *ngIf="(loading$ | async)">Cargando...</b>
+
 <br>
 
-<p-table [value]="vehiculos" 
+<p-table [value]="(vehicles$ | async)!" 
          [tableStyle]="{ 'width': '70rem','text-align': 'center' }"
          [paginator]="true"
          [rows]="5"
@@ -19,18 +21,18 @@
             <th style="width: 5rem"></th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-vehiculo>
+    <ng-template pTemplate="body" let-vehicle>
         <tr>
-            <td>{{ vehiculo.id }}</td>
-            <td>{{ vehiculo.marca }}</td>
-            <td>{{ vehiculo.modelo }}</td>
-            <td>{{ vehiculo.anio }}</td>
-            <td>{{ vehiculo.motor }}</td>
+            <td>{{ vehicle.id }}</td>
+            <td>{{ vehicle.marca }}</td>
+            <td>{{ vehicle.modelo }}</td>
+            <td>{{ vehicle.anio }}</td>
+            <td>{{ vehicle.motor }}</td>
             <td>
-                <p-button label="Eliminar" styleClass="p-button-danger p-button-text p-button-sm" (click)="deleteVehiculo(vehiculo)"></p-button>
+                <p-button label="Eliminar" styleClass="p-button-danger p-button-text p-button-sm" (click)="deleteVehiculo(vehicle)"></p-button>
             </td>
             <td>
-                <p-button label="Editar" styleClass="p-button-warning p-button-text p-button-sm" (click)="getVehiculo(vehiculo)"></p-button>
+                <p-button label="Editar" styleClass="p-button-warning p-button-text p-button-sm" (click)="getVehiculo(vehicle)"></p-button>
             </td>
         </tr>
     </ng-template>

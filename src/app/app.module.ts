@@ -12,6 +12,9 @@ import { AddVehiculoComponent } from './components/vehiculo/add-vehiculo/add-veh
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { vehiclesReducer } from './state';
 
 
 @NgModule({
@@ -30,7 +33,11 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
     DialogModule,
     InputTextModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forRoot({
+      vehiclesState: vehiclesReducer
+    }),
+    StoreDevtoolsModule.instrument({})
   ],
   providers: [],
   bootstrap: [AppComponent]

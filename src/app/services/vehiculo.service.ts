@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable, Subject, tap } from 'rxjs';
-import { Vehiculo } from '../Interfaces/Vehiculo';
+import { Vehicle as Vehicle } from '../Interfaces/Vehicle';
 
 const HttpOptions = {
   headers: new HttpHeaders({
@@ -25,35 +25,35 @@ export class VehiculoService {
   
   @Output() mediador: EventEmitter<any> = new EventEmitter();
 
-  getVehiculos(): Observable<Vehiculo[]>{
-    return this.http.get<Vehiculo[]>(this.apiUrl);
+  getVehiculos(): Observable<Vehicle[]>{ 
+    return this.http.get<Vehicle[]>(this.apiUrl);
   }
 
-  getVehiculo(vehiculo: Vehiculo): Observable<Vehiculo>{
+  getVehiculo(vehiculo: Vehicle): Observable<Vehicle>{
     const url = `${this.apiUrl}/${vehiculo.id}`;
-    return this.http.get<Vehiculo>(url);
+    return this.http.get<Vehicle>(url);
   }
 
-  deleteVehiculo(vehiculo: Vehiculo){
+  deleteVehiculo(vehiculo: Vehicle){
     const url = `${this.apiUrl}/${vehiculo.id}`;
-    return this.http.delete<Vehiculo>(url).pipe(
+    return this.http.delete<Vehicle>(url).pipe(
       tap(() => {
         this.RefreshData.next();
       })
     );
   }
 
-  addVehiculo(vehiculo: Vehiculo): Observable<Vehiculo> {
-    return this.http.post<Vehiculo>(this.apiUrl, vehiculo).pipe(
+  addVehiculo(vehiculo: Vehicle): Observable<Vehicle> {
+    return this.http.post<Vehicle>(this.apiUrl, vehiculo).pipe(
       tap(() => {
         this.RefreshData.next();
       })
     );
   }
 
-  updateVehiculo(editId:Number, vehiculo: Vehiculo): Observable<Vehiculo> {
+  updateVehiculo(editId:Number, vehiculo: Vehicle): Observable<Vehicle> {
     const url = `${this.apiUrl}/${editId}`;
-    return this.http.put<Vehiculo>(url, vehiculo).pipe(
+    return this.http.put<Vehicle>(url, vehiculo).pipe(
       tap(() => {
         this.RefreshData.next();
       })

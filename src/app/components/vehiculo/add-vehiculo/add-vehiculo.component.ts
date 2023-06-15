@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VehiculoService } from 'src/app/services/vehiculo.service';
+import { VehiclesPageActions, VehiclesSelectors } from 'src/app/state';
+import { Observable } from 'rxjs';
+import { Vehicle } from 'src/app/Interfaces/Vehicle';
 
 @Component({
   selector: 'app-add-vehiculo',
@@ -10,7 +14,9 @@ import { VehiculoService } from 'src/app/services/vehiculo.service';
 export class AddVehiculoComponent implements OnInit {
 
   vehicleForm! : FormGroup;
+
   constructor(
+    private store: Store,
     private formBuilder : FormBuilder,
     private vehiculoService: VehiculoService) { }
 
@@ -28,10 +34,10 @@ export class AddVehiculoComponent implements OnInit {
   ngOnInit() {
       this.generateForm();
       this.generateEditForm();
-
+    
       this.vehiculoService.RefreshData.subscribe(resp => {
         this.clearAction();
-    });
+      });
   }
 
   generateForm(){
@@ -80,9 +86,11 @@ export class AddVehiculoComponent implements OnInit {
 
   addVehiculo(){
     if(this.vehicleForm.valid){
+
       this.vehiculoService.addVehiculo(this.vehicleForm.value).subscribe({
         next:(res) => { 
-          this.vehicleForm.reset();
+          this.store.dispatch(VehiclesPageActions.addVehicle({ vehicle: res}));
+          this.clearAction();
         },
         error:() => { 
           alert("error al registrar el vehiculo") 
@@ -93,12 +101,14 @@ export class AddVehiculoComponent implements OnInit {
 
   updateVehiculo(){
     if(this.vehicleForm.valid){
+
       this.vehiculoService.updateVehiculo(this.editId, this.vehicleForm.value).subscribe({
         next:(res) => { 
-          this.vehicleForm.reset();
+          this.store.dispatch(VehiclesPageActions.updateVehicle({ vehicle: res}));
+          this.clearAction();
         },
         error:() => { 
-          alert("error al registrar el vehiculo") 
+          alert("error al modificar el vehiculo")
         }
       })
     }
