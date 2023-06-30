@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store"
-import { Vehicle } from "../Interfaces/Vehicle"
+import { Vehicle } from "../vehicles/models/vehicle.model"
 
 export const activePreload = createAction('[Vehicles Page] Preload Vehicles List')
 

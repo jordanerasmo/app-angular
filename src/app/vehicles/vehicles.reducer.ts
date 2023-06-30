@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import { VehiclesPageActions } from ".";
-import { Vehicle } from "../Interfaces/Vehicle";
+import { VehiclesPageActions } from "../state";
+import { Vehicle } from "./models/vehicle.model";
 
 export interface VehiclesState{
     vehicles: Vehicle[],

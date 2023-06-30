@@ -1,23 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VehiculoService } from 'src/app/services/vehiculo.service';
-import { VehiclesPageActions, VehiclesSelectors } from 'src/app/state';
-import { Observable } from 'rxjs';
-import { Vehicle } from 'src/app/Interfaces/Vehicle';
 
 @Component({
-  selector: 'app-add-vehiculo',
-  templateUrl: './add-vehiculo.component.html',
-  styleUrls: ['./add-vehicle.component.css']
+  selector: 'app-vehicle-add',
+  templateUrl: './vehicle-add.component.html',
+  styleUrls: ['./vehicle-add.component.scss']
 })
-
-export class AddVehiculoComponent implements OnInit {
+export class VehicleAddComponent implements OnInit{
 
   vehicleForm! : FormGroup;
 
   constructor(
-    private store: Store,
+    //private store: Store,
     private formBuilder : FormBuilder,
     private vehiculoService: VehiculoService) { }
 
@@ -31,9 +26,9 @@ export class AddVehiculoComponent implements OnInit {
   buttonColor: string = "p-button-success";
 
   editId: number = 0;
-  
-  ngOnInit() {
-      this.generateForm();
+
+  ngOnInit(): void {
+    this.generateForm();
       this.generateEditForm();
     
       this.vehiculoService.RefreshData.subscribe(resp => {
@@ -90,7 +85,7 @@ export class AddVehiculoComponent implements OnInit {
 
       this.vehiculoService.addVehiculo(this.vehicleForm.value).subscribe({
         next:(res) => { 
-          this.store.dispatch(VehiclesPageActions.addVehicle({ vehicle: res}));
+          //this.store.dispatch(VehiclesPageActions.addVehicle({ vehicle: res}));
           this.clearAction();
         },
         error:() => { 
@@ -105,7 +100,7 @@ export class AddVehiculoComponent implements OnInit {
 
       this.vehiculoService.updateVehiculo(this.editId, this.vehicleForm.value).subscribe({
         next:(res) => { 
-          this.store.dispatch(VehiclesPageActions.updateVehicle({ vehicle: res}));
+          //this.store.dispatch(VehiclesPageActions.updateVehicle({ vehicle: res}));
           this.clearAction();
         },
         error:() => { 
@@ -114,6 +109,5 @@ export class AddVehiculoComponent implements OnInit {
       })
     }
   }
-
 
 }

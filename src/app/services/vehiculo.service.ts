@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable, Subject, tap } from 'rxjs';
-import { Vehicle as Vehicle } from '../Interfaces/Vehicle';
+import { Vehicle as Vehicle } from '../vehicles/models/vehicle.model';
 
 const HttpOptions = {
   headers: new HttpHeaders({

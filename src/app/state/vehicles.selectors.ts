@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { VehiclesState } from "./vehicles.reducer";
+import { VehiclesState } from "../vehicles/vehicles.reducer";
 
 
 const vehiclesState = createFeatureSelector<VehiclesState>('vehiclesState')

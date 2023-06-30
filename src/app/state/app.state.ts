@@ -1,9 +1,9 @@
 import { ActionReducerMap } from "@ngrx/store";
-import { vehiclesState } from "../Interfaces/vehicle.state";
-import { vehiclesReducer } from "./reducers/vehicles.items.reducers";
+import { VehiclesState } from "../vehicles/vehicles.reducer";
+import { vehiclesReducer } from "../vehicles/vehicles.reducer";
 
 export interface AppState {
-    vehiclesList: vehiclesState
+    vehiclesList: VehiclesState
 }
 
 export const ROOT_REDUCERS:ActionReducerMap<AppState> = {
