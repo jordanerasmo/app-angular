@@ -17,6 +17,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appReducers } from './app.reducer';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { appReducers } from './app.reducer';
         FormsModule,
         ReactiveFormsModule,
         VehicleModule,
+        SharedModule,
         StoreModule.forRoot(appReducers),
         StoreDevtoolsModule.instrument({
             maxAge: 25

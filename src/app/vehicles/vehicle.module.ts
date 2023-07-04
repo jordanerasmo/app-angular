@@ -19,6 +19,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SkeletonModule } from 'primeng/skeleton';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     ReactiveFormsModule,
     ProgressSpinnerModule,
     SkeletonModule,
-    StoreModule.forRoot({ vehicles: vehicleReducer }),
+    StoreModule.forRoot(vehicleReducer),
     StoreDevtoolsModule.instrument({}),
   ],
   exports: [

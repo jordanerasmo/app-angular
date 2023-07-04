@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import * as vehicleActions from 'src/app/vehicles/vehicles.actions';
 import * as generalActions from 'src/app/shared/general.actions'
 import { AppState } from 'src/app/app.reducer';
-import { Subscription } from 'rxjs';
+import { lastValueFrom, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-vehicle-list',
@@ -21,7 +21,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
         private store: Store<AppState>,
         private vehiculoService: VehiculoService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
 
     this.vehicleSubscription = this.store.select('vehicle').subscribe(v => {
       this.vehicles$ = v.vehicles;
@@ -29,14 +29,15 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(generalActions.startLoading());
     this.getVehiculos();
-    this.store.dispatch(generalActions.stopLoading())
+    this.store.dispatch(generalActions.stopLoading());
   }
-
+  
   ngOnDestroy(): void {
     this.vehicleSubscription.unsubscribe();
   }
 
-  getVehiculos() {
+  getVehiculos(){
+
     this.vehiculoService.getVehiculos().subscribe((vehiculos) => (
       setTimeout(() => {
         this.store.dispatch(vehicleActions.getVehicles({ vehicles: vehiculos }))
