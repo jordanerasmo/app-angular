@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { vehiclesReducer } from './state';
 import { VehicleModule } from "./vehicles/vehicle.module";
 
 //primeNg
@@ -17,6 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { appReducers } from './app.reducer';
 
 @NgModule({
     declarations: [
@@ -35,11 +35,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
         InputTextModule,
         FormsModule,
         ReactiveFormsModule,
-        StoreModule.forRoot({
-            vehiclesState: vehiclesReducer
-        }),
         StoreDevtoolsModule.instrument({}),
-        VehicleModule
+        VehicleModule,
+        StoreModule.forRoot(appReducers)
     ]
 })
 export class AppModule { }
