@@ -3,6 +3,7 @@ import { Vehicle } from 'src/app/vehicles/models/vehicle.model';
 import { VehiculoService } from 'src/app/services/vehiculo.service';
 import { Store } from '@ngrx/store';
 import * as vehicleActions from 'src/app/vehicles/vehicles.actions';
+import * as generalActions from 'src/app/shared/general.actions'
 import { AppState } from 'src/app/app.reducer';
 import { Subscription } from 'rxjs';
 
@@ -26,7 +27,9 @@ export class VehicleListComponent implements OnInit, OnDestroy {
       this.vehicles$ = v.vehicles;
     })
 
+    this.store.dispatch(generalActions.startLoading());
     this.getVehiculos();
+    this.store.dispatch(generalActions.stopLoading())
   }
 
   ngOnDestroy(): void {
@@ -34,13 +37,9 @@ export class VehicleListComponent implements OnInit, OnDestroy {
   }
 
   getVehiculos() {
-
-    this.store.dispatch(vehicleActions.activePreload());
-
     this.vehiculoService.getVehiculos().subscribe((vehiculos) => (
       setTimeout(() => {
         this.store.dispatch(vehicleActions.getVehicles({ vehicles: vehiculos }))
-        this.store.dispatch(vehicleActions.stopPreload());
       }, 3000)
     ));
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.reducer';
@@ -8,18 +8,24 @@ import { AppState } from 'src/app/app.reducer';
   templateUrl: './vehicle-page.component.html',
   styleUrls: ['./vehicle-page.component.scss']
 })
-export class VehiclePageComponent {
+export class VehiclePageComponent implements OnInit, OnDestroy {
 
   vehicleSubscription: Subscription;
-  loading$: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.vehicleSubscription = this.store.select('vehicle').subscribe(v => {
-      this.loading$ = v.preload;
+    this.vehicleSubscription = this.store.select('general').subscribe(v => {
+      console.log(v);
+      
+      this.loading = v.isLoading;
     })
+  }
+
+  ngOnDestroy(): void {
+    this.vehicleSubscription.unsubscribe();
   }
 
 }

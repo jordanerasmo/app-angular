@@ -4,7 +4,6 @@ import { Vehicle } from "./models/vehicle.model";
 
 export interface VehiclesState{
     vehicles: Vehicle[],
-    preload: boolean,
     vehicleEdit: Vehicle
 }
 
@@ -18,37 +17,16 @@ const vehicleEditInit: Vehicle = {
 
 const initialState: VehiclesState = {
     vehicles: [],
-    preload: false,
     vehicleEdit: vehicleEditInit
 }
 
 const _vehicleReducer = createReducer(
-    //Init preload
     initialState,
-    on(VehiclesPageActions.activePreload,
-        (currentState, action) => {
-            return {
-                ...currentState,
-                preload: true
-            }
-        }
-    ),
-    //StopPreload
-    on(VehiclesPageActions.stopPreload,
-        (currentState, action) => {
-            return {
-                ...currentState,
-                preload: false
-            }
-        }
-    ),
     //Getvehicles
     on(VehiclesPageActions.getVehicles, 
         (currentState, action) => ({
             ...currentState,
-            vehicles: [...action.vehicles].map(v => {
-                return {...v, setEdit: false}
-            })
+            vehicles: [...action.vehicles] //modified with effects
         })
     ),
     //Getvehicle

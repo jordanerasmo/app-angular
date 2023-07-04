@@ -1,9 +1,6 @@
 import { createAction, props } from "@ngrx/store"
 import { Vehicle } from "./models/vehicle.model"
 
-export const activePreload = createAction('[Vehicles Page] Preload Vehicles List')
-export const stopPreload = createAction('[Vehicles Page] Stop Preload Vehicles List')
-
 export const getVehicles = createAction('[Vehicles Page] Get Vehicles List', 
 props<{ vehicles: Vehicle[]}>())
 

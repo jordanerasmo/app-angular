@@ -35,9 +35,12 @@ import { appReducers } from './app.reducer';
         InputTextModule,
         FormsModule,
         ReactiveFormsModule,
-        StoreDevtoolsModule.instrument({}),
         VehicleModule,
-        StoreModule.forRoot(appReducers)
+        StoreModule.forRoot(appReducers),
+        StoreDevtoolsModule.instrument({
+            maxAge: 25
+            //logOnly: enviroment.production
+        })
     ]
 })
 export class AppModule { }

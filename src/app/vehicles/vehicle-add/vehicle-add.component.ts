@@ -71,10 +71,10 @@ export class VehicleAddComponent implements OnInit, OnDestroy{
     this.editId = this.vehicleEdit.id
 
     this.vehicleForm.setValue({
-      marca: this.vehicleEdit?.marca,
-      modelo: this.vehicleEdit?.modelo,
-      anio: this.vehicleEdit?.anio,
-      motor: this.vehicleEdit?.motor
+      marca: this.vehicleEdit.marca,
+      modelo: this.vehicleEdit.modelo,
+      anio: this.vehicleEdit.anio,
+      motor: this.vehicleEdit.motor
     })
 
   }

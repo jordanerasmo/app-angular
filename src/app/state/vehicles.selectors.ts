@@ -9,8 +9,3 @@ export const vehicles = createSelector(
     vehiclesState,
     (vehiclesState) => vehiclesState.vehicles
 )
-
-export const preload = createSelector(
-    vehiclesState,
-    (vehiclesState) => vehiclesState.preload
-)
