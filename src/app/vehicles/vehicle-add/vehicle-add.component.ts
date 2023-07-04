@@ -1,20 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VehiculoService } from 'src/app/services/vehiculo.service';
+import { MessageService } from 'primeng/api';
+import { Store } from '@ngrx/store';
+import * as vehicleActions from 'src/app/vehicles/vehicles.actions';
+import { Vehicle } from '../models/vehicle.model';
+import { Observable, Subscription } from 'rxjs';
+import { AppState } from 'src/app/app.reducer';
 
 @Component({
   selector: 'app-vehicle-add',
   templateUrl: './vehicle-add.component.html',
-  styleUrls: ['./vehicle-add.component.scss']
+  styleUrls: ['./vehicle-add.component.scss'],
+  providers: [MessageService]
 })
-export class VehicleAddComponent implements OnInit{
+export class VehicleAddComponent implements OnInit, OnDestroy{
 
   vehicleForm! : FormGroup;
+  vehicleSubscription: Subscription;
 
   constructor(
-    //private store: Store,
+    private store: Store<AppState>,
     private formBuilder : FormBuilder,
-    private vehiculoService: VehiculoService) { }
+    private vehiculoService: VehiculoService,
+    private messageService: MessageService) { }
 
   marca: string = "";
   modelo: string = "";
@@ -22,18 +31,27 @@ export class VehicleAddComponent implements OnInit{
   motor: string = "";
 
   isEdit: boolean = false;
+  vehicleEdit: Vehicle;
+
   labelName: string = "Guardar";
   buttonColor: string = "p-button-success";
 
   editId: number = 0;
 
   ngOnInit(): void {
+
+    this.vehicleSubscription = this.store.select('vehicle').subscribe(v => {
+      this.vehicleEdit = v.vehicleEdit;
+      if(this.vehicleEdit.id != 0){
+        this.generateEditForm();
+      }
+    })
+
     this.generateForm();
-      this.generateEditForm();
-    
-      this.vehiculoService.RefreshData.subscribe(resp => {
-        this.clearAction();
-      });
+  }
+
+  ngOnDestroy(): void{
+    this.vehicleSubscription.unsubscribe();
   }
 
   generateForm(){
@@ -46,30 +64,30 @@ export class VehicleAddComponent implements OnInit{
   }
 
   generateEditForm(){
-    this.vehiculoService.mediador.subscribe(data => {
+    this.labelName = "Modificar"
+    this.buttonColor = "p-button-warning"
+    this.isEdit = true;
 
-      this.labelName = "Modificar"
-      this.buttonColor = "p-button-warning"
+    this.editId = this.vehicleEdit.id
 
-      this.editId = data.data.id;
-
-      this.vehicleForm.setValue({
-        marca: data.data.marca,
-        modelo: data.data.modelo,
-        anio: data.data.anio,
-        motor: data.data.motor
-      });
-
-      this.isEdit = true;
+    this.vehicleForm.setValue({
+      marca: this.vehicleEdit?.marca,
+      modelo: this.vehicleEdit?.modelo,
+      anio: this.vehicleEdit?.anio,
+      motor: this.vehicleEdit?.motor
     })
+
   }
   
   submitAction(){
-    if(this.isEdit){
-      this.updateVehiculo();
-    }else{
-      this.labelName = "Guardar"
-      this.addVehiculo();
+
+    if(this.vehicleForm.valid)
+    {
+      return this.isEdit ? this.updateVehiculo() : this.addVehiculo()
+    }
+    else
+    {
+      this.showMessage("Info", "Debe completar todos los campos")
     }
   }
 
@@ -81,33 +99,39 @@ export class VehicleAddComponent implements OnInit{
   }
 
   addVehiculo(){
-    if(this.vehicleForm.valid){
-
-      this.vehiculoService.addVehiculo(this.vehicleForm.value).subscribe({
-        next:(res) => { 
-          //this.store.dispatch(VehiclesPageActions.addVehicle({ vehicle: res}));
-          this.clearAction();
-        },
-        error:() => { 
-          alert("error al registrar el vehiculo") 
-        }
-      })
-    }
+    this.vehiculoService.addVehiculo(this.vehicleForm.value).subscribe({
+      next:(res) => { 
+        this.store.dispatch(vehicleActions.addVehicle({ vehicle: res}));
+        this.clearAction();
+      },
+      error:() => { 
+        alert("error al registrar el vehiculo") 
+      }
+    })
   }
 
   updateVehiculo(){
-    if(this.vehicleForm.valid){
+    this.vehiculoService.updateVehiculo(this.editId, this.vehicleForm.value).subscribe({
+      next:(res) => { 
+        this.store.dispatch(vehicleActions.updateVehicle({ vehicle: res}));
+        this.clearAction();
+      },
+      error:() => { 
+        this.showError();
+      }
+    })
+  }
 
-      this.vehiculoService.updateVehiculo(this.editId, this.vehicleForm.value).subscribe({
-        next:(res) => { 
-          //this.store.dispatch(VehiclesPageActions.updateVehicle({ vehicle: res}));
-          this.clearAction();
-        },
-        error:() => { 
-          alert("error al modificar el vehiculo")
-        }
-      })
-    }
+  showCorrectSave() {
+    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Exito', detail: 'Vehiculo registrado correctamente' });
+  }
+
+  showError() {
+    this.messageService.add({ key: 'tc', severity: 'Error', summary: 'Error', detail: 'Ocurrio un error al realizar la peticion' });
+  }
+
+  showMessage(message: string, title: string) {
+    this.messageService.add({ key: 'tc', severity: 'info', summary: message, detail: title });
   }
 
 }

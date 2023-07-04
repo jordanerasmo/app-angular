@@ -4,15 +4,25 @@ import { Vehicle } from "./models/vehicle.model";
 
 export interface VehiclesState{
     vehicles: Vehicle[],
-    preload: boolean
+    preload: boolean,
+    vehicleEdit: Vehicle
+}
+
+const vehicleEditInit: Vehicle = {
+    id: 0,
+    marca: "",
+    modelo: "",
+    motor: "",
+    anio: ""
 }
 
 const initialState: VehiclesState = {
     vehicles: [],
-    preload: false
+    preload: false,
+    vehicleEdit: vehicleEditInit
 }
 
-export const vehiclesReducer = createReducer(
+const _vehicleReducer = createReducer(
     //Init preload
     initialState,
     on(VehiclesPageActions.activePreload,
@@ -23,11 +33,22 @@ export const vehiclesReducer = createReducer(
             }
         }
     ),
+    //StopPreload
+    on(VehiclesPageActions.stopPreload,
+        (currentState, action) => {
+            return {
+                ...currentState,
+                preload: false
+            }
+        }
+    ),
     //Getvehicles
     on(VehiclesPageActions.getVehicles, 
         (currentState, action) => ({
-            preload: false,
-            vehicles: action.vehicles
+            ...currentState,
+            vehicles: [...action.vehicles].map(v => {
+                return {...v, setEdit: false}
+            })
         })
     ),
     //Getvehicle
@@ -35,6 +56,13 @@ export const vehiclesReducer = createReducer(
         (currentState, action) => ({
             ...currentState, //(copia superficial del resto de props) 
             vehicle: currentState.vehicles.find(vehicle => (vehicle.id === action.vehicle.id))
+        })
+    ),
+     //SetEditVehicle
+     on(VehiclesPageActions.setEditVehicle, 
+        (currentState, action) => ({
+            ...currentState, //(copia superficial del resto de props) 
+            vehicleEdit: action.vehicle
         })
     ),
     //AddVehicle
@@ -62,3 +90,6 @@ export const vehiclesReducer = createReducer(
     )
 )
 
+export function vehicleReducer(state: any, action: any){
+    return _vehicleReducer(state, action);
+}

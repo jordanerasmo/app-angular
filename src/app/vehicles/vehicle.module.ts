@@ -6,6 +6,11 @@ import { VehicleItemComponent } from './vehicle-item/vehicle-item.component';
 import { VehiclePageComponent } from './vehicle-page/vehicle-page.component';
 
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+//ngrx
+import { StoreModule } from "@ngrx/store";
+import { vehicleReducer } from './vehicles.reducer';
 
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
@@ -14,6 +19,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SkeletonModule } from 'primeng/skeleton';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +38,9 @@ import { SkeletonModule } from 'primeng/skeleton';
     FormsModule,
     ReactiveFormsModule,
     ProgressSpinnerModule,
-    SkeletonModule
+    SkeletonModule,
+    StoreModule.forRoot({ vehicles: vehicleReducer }),
+    StoreDevtoolsModule.instrument({}),
   ],
   exports: [
     VehiclePageComponent

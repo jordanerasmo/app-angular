@@ -1,5 +1,7 @@
 <div class="content-add">
 
+    <p-toast position="top-center" key="tc"></p-toast>
+
     <div *ngIf="isEdit; else create">
         <p class="title">Editar Vehículo</p>
     </div>
@@ -9,14 +11,14 @@
     </ng-template>
     
     <div class="content-form">
-        <form [formGroup]="vehicleForm">
+        <form [formGroup]="vehicleForm" (ngSubmit)="submitAction()">
             <input pInputText type="text" class="p-inputtext-sm" placeholder="Marca" formControlName="marca" />
             <input pInputText type="text" class="p-inputtext-sm" placeholder="Modelo" formControlName="modelo" />
             <input pInputText type="text" class="p-inputtext-sm" placeholder="Año" formControlName="anio" />
             <input pInputText type="text" class="p-inputtext-sm" placeholder="Motor" formControlName="motor" />
             
             <div class="content-buttons">
-                <p-button label="{{labelName}}" styleClass="p-button-sm {{buttonColor}}" (click)="submitAction()"></p-button>
+                <p-button label="{{labelName}}" styleClass="p-button-sm {{buttonColor}}" type="submit" [disabled]="vehicleForm.invalid"></p-button>
                 <p-button label="Limpiar" styleClass="p-button-sm p-button-secondary p-button-text" (click)="clearAction()"></p-button>
             </div>
         </form>
