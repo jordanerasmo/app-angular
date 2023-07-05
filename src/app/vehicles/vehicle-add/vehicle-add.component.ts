@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VehiculoService } from 'src/app/services/vehiculo.service';
 import { MessageService } from 'primeng/api';
 import { Store } from '@ngrx/store';
-import * as vehicleActions from 'src/app/vehicles/vehicles.actions';
+import * as vehicleActions from 'src/app/store/actions/vehicle.actions';
+import * as vehiclesActions from 'src/app/store/actions/vehicles.actions';
 import { Vehicle } from '../models/vehicle.model';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.reducer';
@@ -41,6 +42,8 @@ export class VehicleAddComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
 
     this.vehicleSubscription = this.store.select('vehicle').subscribe(v => {
+      console.log(v);
+      
       this.vehicleEdit = v.vehicleEdit;
       if(this.vehicleEdit.id != 0){
         this.generateEditForm();
@@ -92,6 +95,7 @@ export class VehicleAddComponent implements OnInit, OnDestroy{
   }
 
   clearAction(){
+    this.store.dispatch(vehicleActions.unsetEditVehicle());
     this.vehicleForm.reset();
     this.isEdit = false;
     this.buttonColor = "p-button-success"
@@ -101,7 +105,7 @@ export class VehicleAddComponent implements OnInit, OnDestroy{
   addVehiculo(){
     this.vehiculoService.addVehiculo(this.vehicleForm.value).subscribe({
       next:(res) => { 
-        this.store.dispatch(vehicleActions.addVehicle({ vehicle: res}));
+        this.store.dispatch(vehiclesActions.addVehicle({ vehicle: res}));
         this.clearAction();
       },
       error:() => { 
@@ -113,7 +117,7 @@ export class VehicleAddComponent implements OnInit, OnDestroy{
   updateVehiculo(){
     this.vehiculoService.updateVehiculo(this.editId, this.vehicleForm.value).subscribe({
       next:(res) => { 
-        this.store.dispatch(vehicleActions.updateVehicle({ vehicle: res}));
+        this.store.dispatch(vehiclesActions.updateVehicle({ vehicle: res}));
         this.clearAction();
       },
       error:() => { 

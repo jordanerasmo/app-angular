@@ -1,31 +1,26 @@
 import { createReducer, on } from "@ngrx/store";
-import { VehiclesPageActions } from "../state";
-import { Vehicle } from "./models/vehicle.model";
+import { VehiclesPageActions } from "..";
+import { Vehicle } from "../../vehicles/models/vehicle.model";
 
 export interface VehiclesState{
     vehicles: Vehicle[],
-    vehicleEdit: Vehicle
-}
-
-const vehicleEditInit: Vehicle = {
-    id: 0,
-    marca: "",
-    modelo: "",
-    motor: "",
-    anio: ""
+    loading: boolean,
+    error: any
 }
 
 const initialState: VehiclesState = {
     vehicles: [],
-    vehicleEdit: vehicleEditInit
+    loading: true,
+    error: null
 }
 
-const _vehicleReducer = createReducer(
+const _vehiclesReducer = createReducer(
     initialState,
     //Getvehicles
     on(VehiclesPageActions.getVehicles, 
         (currentState, action) => ({
             ...currentState,
+            loading: false,
             vehicles: [...action.vehicles] //modified with effects
         })
     ),
@@ -34,13 +29,6 @@ const _vehicleReducer = createReducer(
         (currentState, action) => ({
             ...currentState, //(copia superficial del resto de props) 
             vehicle: currentState.vehicles.find(vehicle => (vehicle.id === action.vehicle.id))
-        })
-    ),
-     //SetEditVehicle
-     on(VehiclesPageActions.setEditVehicle, 
-        (currentState, action) => ({
-            ...currentState, //(copia superficial del resto de props) 
-            vehicleEdit: action.vehicle
         })
     ),
     //AddVehicle
@@ -68,6 +56,6 @@ const _vehicleReducer = createReducer(
     )
 )
 
-export function vehicleReducer(state: any, action: any){
-    return _vehicleReducer(state, action);
+export function vehiclesReducer(state: any, action: any){
+    return _vehiclesReducer(state, action);
 }

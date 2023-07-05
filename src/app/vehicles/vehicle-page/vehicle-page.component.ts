@@ -17,8 +17,8 @@ export class VehiclePageComponent implements OnInit, OnDestroy {
     private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.vehicleSubscription = this.store.select('general').subscribe(v => {      
-      this.loading = v.isLoading;
+    this.vehicleSubscription = this.store.select('vehicles').subscribe(v => {      
+      this.loading = v.loading;
     })
   }
 

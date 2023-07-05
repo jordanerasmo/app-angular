@@ -10,7 +10,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 //ngrx
 import { StoreModule } from "@ngrx/store";
-import { vehicleReducer } from './vehicles.reducer';
+import { vehiclesReducer } from '../store/reducers/vehicles.reducer';
 
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
@@ -40,7 +40,7 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     ProgressSpinnerModule,
     SkeletonModule,
-    StoreModule.forRoot(vehicleReducer),
+    StoreModule.forRoot(vehiclesReducer),
     StoreDevtoolsModule.instrument({}),
   ],
   exports: [
